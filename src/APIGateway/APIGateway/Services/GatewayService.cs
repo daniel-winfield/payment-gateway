@@ -15,6 +15,15 @@ namespace APIGateway.Services
         {
         }
 
+        public bool IsValidApiKey(string apiKey)
+        {
+            var isValidKeyTask = ProcessStuff("https://localhost:44330/api/Auth/" + apiKey);
+
+            isValidKeyTask.Wait();
+            var isValidKey = Boolean.Parse(isValidKeyTask.Result);
+            return isValidKey;
+        }
+
         public async Task<bool> ProcessPayment(string cardNumber, string expiryDate, double amount, string currency, string cvv)
         {
             var isCardValid = await IsCardValid(cardNumber);

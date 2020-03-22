@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace APIGateway.Models
+namespace Payment.API.Models
 {
-    public class PaymentDetails
+    public class PaymentDetailsDto
     {
         public string CardNumber { get; set; }
 

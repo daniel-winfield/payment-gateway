@@ -7,6 +7,8 @@ namespace APIGateway.Services
 {
     public interface IGatewayService
     {
+        bool IsValidApiKey(string apiKey);
+
         Task<bool> ProcessPayment(string cardNumber, string expiryDate, double amount, string currency, string cvv);
     }
 }
