@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using APIGateway.Models;
 using APIGateway.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +47,7 @@ namespace APIGateway.Controllers
                 return BadRequest("Invalid API key");
             }
 
-            var isValid = await _service.ProcessPayment(paymentDetails.CardNumber, paymentDetails.ExpiryDate, paymentDetails.Amount, paymentDetails.Currency, paymentDetails.Cvv);
+            var isValid = await _service.ProcessPayment(paymentDetails);
 
             return Ok(isValid);
         }

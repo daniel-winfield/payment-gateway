@@ -18,9 +18,9 @@ namespace Payment.API.DataAccess
 
             var payments = new Models.Database.Payment[]
             {
-                new Models.Database.Payment { MaskedCardNumber = "1234", Amount = 12.34, Currency = "GBP", Cvv = "111", ExpiryDate = "01/23" },
-                new Models.Database.Payment { MaskedCardNumber = "9999", Amount = 999.9, Currency = "GBP", Cvv = "111", ExpiryDate = "01/23" },
-                new Models.Database.Payment { MaskedCardNumber = "5555", Amount = 5555.0, Currency = "USD", Cvv = "111", ExpiryDate = "01/23" }
+                new Models.Database.Payment { MaskedCardNumber = "1234", Amount = 12.34, Currency = "GBP", Cvv = "111", ExpiryDate = "01/23", PaymentStatus = Models.PaymentStatusEnum.Completed },
+                new Models.Database.Payment { MaskedCardNumber = "9999", Amount = 999.9, Currency = "GBP", Cvv = "111", ExpiryDate = "01/23", PaymentStatus = Models.PaymentStatusEnum.Failed },
+                new Models.Database.Payment { MaskedCardNumber = "5555", Amount = 5555.0, Currency = "USD", Cvv = "111", ExpiryDate = "01/23", PaymentStatus = Models.PaymentStatusEnum.Pending }
             };
 
             foreach (var payment in payments)

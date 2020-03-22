@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Logging.API.Models.Database
+﻿namespace Logging.API.Models.Database
 {
     public class Log
     {
@@ -11,6 +6,6 @@ namespace Logging.API.Models.Database
 
         public string Message { get; set; }
 
-        public int LogType { get; set; }
+        public LogTypeEnum LogType { get; set; }
     }
 }

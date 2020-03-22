@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Logging.API.Models
 {
-    public enum LogType
+    public enum LogTypeEnum
     {
         // Many more log types could be added 
         Error,

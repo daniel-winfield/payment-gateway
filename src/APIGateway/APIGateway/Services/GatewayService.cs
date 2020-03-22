@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using APIGateway.Models;
+using Newtonsoft.Json;
+using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace APIGateway.Services
@@ -24,10 +23,20 @@ namespace APIGateway.Services
             return isValidKey;
         }
 
-        public async Task<bool> ProcessPayment(string cardNumber, string expiryDate, double amount, string currency, string cvv)
+        public async Task<bool> ProcessPayment(PaymentDetailsDto paymentDetails)
         {
-            var isCardValid = await IsCardValid(cardNumber);
-            return isCardValid;
+            var isCardValid = await IsCardValid(paymentDetails.CardNumber);
+
+            if (!isCardValid)
+            {
+                throw new ArgumentException("Card number is invalid");
+            }
+
+            client.DefaultRequestHeaders.Accept.Clear();
+            var postBody = new StringContent(JsonConvert.SerializeObject(paymentDetails), System.Text.Encoding.UTF8, "application/json");
+            var postResponse = await client.PostAsync("https://localhost:44399/api/Payment/", postBody);
+
+            return postResponse.IsSuccessStatusCode;
         }
 
         private async Task<bool> IsCardValid(string cardNumber)

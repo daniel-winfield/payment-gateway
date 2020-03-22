@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Payment.API.Models.Database
 {
@@ -10,6 +7,7 @@ namespace Payment.API.Models.Database
         public int PaymentId { get; set; }
 
         // Would possibly want to store full card number, storing masked version for safety
+        [MaxLength(4)]
         public string MaskedCardNumber { get; set; }
 
         public string ExpiryDate { get; set; }
@@ -19,5 +17,7 @@ namespace Payment.API.Models.Database
         public string Currency { get; set; }
 
         public string Cvv { get; set; }
+
+        public PaymentStatusEnum PaymentStatus { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Payment.API.Models;
+using Payment.API.Services;
 
 namespace Payment.API.Controllers
 {
@@ -11,6 +12,13 @@ namespace Payment.API.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
+        private readonly IPaymentService _service;
+
+        public PaymentController(IPaymentService service)
+        {
+            _service = service;
+        }
+
         // GET api/Payment/5
         [HttpGet("{id}")]
         public ActionResult<string> GetPaymentById(int id)
@@ -20,8 +28,9 @@ namespace Payment.API.Controllers
 
         // POST api/Payment
         [HttpPost]
-        public void ProcessPayment([FromBody] PaymentDetailsDto paymentDetails)
+        public async Task<ActionResult<int>> ProcessPayment([FromBody] PaymentDetailsDto paymentDetails)
         {
+            return await _service.ProcessPaymentAsync(paymentDetails);
         }
     }
 }

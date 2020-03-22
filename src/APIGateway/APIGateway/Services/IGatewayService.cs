@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using APIGateway.Models;
 using System.Threading.Tasks;
 
 namespace APIGateway.Services
@@ -9,6 +7,6 @@ namespace APIGateway.Services
     {
         bool IsValidApiKey(string apiKey);
 
-        Task<bool> ProcessPayment(string cardNumber, string expiryDate, double amount, string currency, string cvv);
+        Task<bool> ProcessPayment(PaymentDetailsDto paymentDetails);
     }
 }

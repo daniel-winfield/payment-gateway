@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using MockBank.Models;
 
 namespace MockBank.Controllers
 {
@@ -12,9 +9,9 @@ namespace MockBank.Controllers
     {
         // POST api/MockBank
         [HttpPost]
-        public bool Post([FromBody] string cardNumber, [FromBody]string expiryDate, [FromBody]double amount, [FromBody]string currency, [FromBody]string cvv)
+        public bool Post([FromBody] PaymentDetailsDto paymentDetails)
         {
-            if (cardNumber == "1111222233334444")
+            if (paymentDetails.CardNumber == "1111222233334444")
             {
                 return true;
             }

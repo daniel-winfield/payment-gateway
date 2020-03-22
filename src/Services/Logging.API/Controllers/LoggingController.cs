@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Logging.API.Models;
+using Logging.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Logging.API.Controllers
@@ -10,17 +9,18 @@ namespace Logging.API.Controllers
     [ApiController]
     public class LoggingController : ControllerBase
     {
-        // GET api/Logging
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        private readonly ILoggingService _service;
+
+        public LoggingController(ILoggingService service)
         {
-            return new string[] { "value1", "value2" };
+            _service = service;
         }
 
         // POST api/Logging
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] LogDto log)
         {
+            _service.AddLog(log);
         }
     }
 }
