@@ -5,5 +5,7 @@
         void AddPayment(Models.Database.Payment payment);
 
         Models.Database.Payment GetPaymentById(int paymentId);
+
+        void SaveChanges();
     }
 }

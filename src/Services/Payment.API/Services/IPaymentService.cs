@@ -7,6 +7,6 @@ namespace Payment.API.Services
     {
         Task<int> ProcessPaymentAsync(PaymentDetailsDto paymentDetails);
 
-        void GetPaymentById(int paymentId);
+        GetPayment_Response GetPaymentById(int paymentId);
     }
 }

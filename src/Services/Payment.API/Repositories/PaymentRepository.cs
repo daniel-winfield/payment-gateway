@@ -22,5 +22,10 @@ namespace Payment.API.Repositories
         {
             return _context.Payments.SingleOrDefault(p => p.PaymentId == paymentId);
         }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
     }
 }

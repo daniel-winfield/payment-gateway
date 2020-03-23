@@ -16,23 +16,26 @@ namespace APIGateway.Controllers
             _service = service;
         }
 
-        // GET api/gateway/CD2C1638-1638-72D5-1638-DEADBEEF1638/1
+        // GET api/gateway/validkey/1
+        /// <summary>
+        /// Returns the payment corresponding to the passed ID
+        /// </summary>
+        /// <param name="apiKey"></param>
+        /// <param name="paymentId"></param>
+        /// <returns></returns>
         [HttpGet("{apiKey}/{paymentId}")]
-        public ActionResult<string> GetPaymentDetailsById(string apiKey, int paymentId)
+        public async Task<ActionResult<GetPayment_Response>> GetPaymentDetailsById(string apiKey, int paymentId)
         {
             if (!_service.IsValidApiKey(apiKey))
             {
                 return BadRequest("Invalid API key");
             }
 
-
-            ////_service.ProcessStuff("https://localhost:44389/", "api/Validation/CardNumber/1234");
-
-            ////_service.ProcessStuff("https://localhost:44330/", "api/Auth");
-            return paymentId.ToString();
+            var payment = await _service.GetPaymentById(paymentId);
+            return payment;
         }
 
-        // POST api/gateway/CD2C1638-1638-72D5-1638-DEADBEEF1638
+        // POST api/gateway/validkey
         /// <summary>
         /// Creates a payment
         /// </summary>

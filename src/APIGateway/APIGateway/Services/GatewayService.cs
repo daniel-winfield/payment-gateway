@@ -8,15 +8,9 @@ namespace APIGateway.Services
 {
     public class GatewayService : IGatewayService
     {
-        private static readonly HttpClient client = new HttpClient();
-
-        public GatewayService()
-        {
-        }
-
         public bool IsValidApiKey(string apiKey)
         {
-            var isValidKeyTask = ProcessStuff("https://localhost:44330/api/Auth/" + apiKey);
+            var isValidKeyTask = GetStringAsync("https://localhost:44330/api/Auth/" + apiKey);
 
             isValidKeyTask.Wait();
             var isValidKey = Boolean.Parse(isValidKeyTask.Result);
@@ -25,39 +19,50 @@ namespace APIGateway.Services
 
         public async Task<bool> ProcessPayment(PaymentDetailsDto paymentDetails)
         {
-            var isCardValid = await IsCardValid(paymentDetails.CardNumber);
+            var isCardValid = await IsValidCard(paymentDetails.CardNumber);
 
             if (!isCardValid)
             {
                 throw new ArgumentException("Card number is invalid");
             }
 
-            client.DefaultRequestHeaders.Accept.Clear();
-            var postBody = new StringContent(JsonConvert.SerializeObject(paymentDetails), System.Text.Encoding.UTF8, "application/json");
-            var postResponse = await client.PostAsync("https://localhost:44399/api/Payment/", postBody);
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                var postBody = new StringContent(JsonConvert.SerializeObject(paymentDetails), System.Text.Encoding.UTF8, "application/json");
+                var postResponse = await client.PostAsync("https://localhost:44399/api/Payment/", postBody);
 
-            return postResponse.IsSuccessStatusCode;
+                return postResponse.IsSuccessStatusCode;
+            }
         }
 
-        private async Task<bool> IsCardValid(string cardNumber)
+        public async Task<GetPayment_Response> GetPaymentById(int paymentId)
         {
-            var isCardValidStr = await ProcessStuff("https://localhost:44389/api/Validation/CardNumber/" + cardNumber);
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                var postResponse = await client.GetAsync(String.Format("https://localhost:44399/api/Payment/{0}", paymentId));
+
+                return await postResponse.Content.ReadAsAsync<GetPayment_Response>();
+            }
+        }
+
+        private async Task<bool> IsValidCard(string cardNumber)
+        {
+            var isCardValidStr = await GetStringAsync("https://localhost:44389/api/Validation/CardNumber/" + cardNumber);
             return Boolean.Parse(isCardValidStr);
         }
 
-        private async Task<string> ProcessStuff(string url)
+        private async Task<string> GetStringAsync(string url)
         {
-            //var x = await ValidateCard();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                var stringTask = client.GetStringAsync(url);
 
-            client.DefaultRequestHeaders.Accept.Clear();
-            ////client.DefaultRequestHeaders.Accept.Add(
-            ////    new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-            ////client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
-
-            var stringTask = client.GetStringAsync(url);
-
-            var result = await stringTask;
-            return result;
+                var result = await stringTask;
+                return result;
+            }
         }
     }
 

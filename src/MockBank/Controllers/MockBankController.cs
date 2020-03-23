@@ -11,12 +11,13 @@ namespace MockBank.Controllers
         [HttpPost]
         public bool Post([FromBody] PaymentDetailsDto paymentDetails)
         {
-            if (paymentDetails.CardNumber == "1111222233334444")
+            // Example invalid card number - 0000 0000 0000 0000
+            if (paymentDetails.CardNumber == "0000000000000000")
             {
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
     }
 }

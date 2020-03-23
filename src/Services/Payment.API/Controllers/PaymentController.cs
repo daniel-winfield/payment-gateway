@@ -23,14 +23,30 @@ namespace Payment.API.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> GetPaymentById(int id)
         {
-            return "value";
+            try
+            {
+                var payment = _service.GetPaymentById(id);
+                return Ok(payment);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // POST api/Payment
         [HttpPost]
         public async Task<ActionResult<int>> ProcessPayment([FromBody] PaymentDetailsDto paymentDetails)
         {
-            return await _service.ProcessPaymentAsync(paymentDetails);
+            try
+            {
+                var newPaymentId = await _service.ProcessPaymentAsync(paymentDetails);
+                return Ok(newPaymentId);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
