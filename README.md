@@ -37,3 +37,4 @@ Invalid card number: `0000000000000000`
 * Add unit, integration and end-to-end tests
 * Add more validation to submitted details
 * Add more logging (error and additional auditing)
+* API URLs should be configurable outside of the codebase
