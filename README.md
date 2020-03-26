@@ -29,14 +29,9 @@ Invalid card number: `0000000000000000`
 ### Retrieve payment
 1. Request is sent to the gateway
 2. API key is checked for validity
-3. The payment details are retrieved from the database using the payment id
-4. The payment details are returned
-
-### Get Payment
-1. Request is sent to the gateway
-2. API key is checked for validity
 3. Payment ID is passed to the payment microservice
-4. Payment details are returned
+4. The payment details are retrieved from the database using the payment id
+5. The payment details are returned
 
 ## Improvements
 * Add unit, integration and end-to-end tests
