@@ -1,5 +1,8 @@
 # Payment Gateway Project
 
+> Note: Microservices will only start when they have been called.
+> This causes the first run of each API call to be much slower than subsequent calls.
+
 ## For testing purposes, some valid and invalid values have been designated
 Valid API Key: `validkey`
 

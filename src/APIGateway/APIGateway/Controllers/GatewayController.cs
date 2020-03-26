@@ -41,18 +41,18 @@ namespace APIGateway.Controllers
         /// </summary>
         /// <param name="apiKey"></param>
         /// <param name="paymentDetails"></param>
-        /// <returns></returns>
+        /// <returns>PaymentId</returns>
         [HttpPost("{apiKey}")]
-        public async Task<ActionResult<bool>> PostPayment(string apiKey, [FromBody] PaymentDetailsDto paymentDetails)
+        public async Task<ActionResult<int>> PostPayment(string apiKey, [FromBody] PaymentDetailsDto paymentDetails)
         {
             if (!_service.IsValidApiKey(apiKey))
             {
                 return BadRequest("Invalid API key");
             }
 
-            var isValid = await _service.ProcessPayment(paymentDetails);
+            var paymentId = await _service.ProcessPayment(paymentDetails);
 
-            return Ok(isValid);
+            return Ok(paymentId);
         }
     }
 }

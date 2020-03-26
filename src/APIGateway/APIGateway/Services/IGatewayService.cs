@@ -9,6 +9,6 @@ namespace APIGateway.Services
 
         bool IsValidApiKey(string apiKey);
 
-        Task<bool> ProcessPayment(PaymentDetailsDto paymentDetails);
+        Task<int> ProcessPayment(PaymentDetailsDto paymentDetails);
     }
 }

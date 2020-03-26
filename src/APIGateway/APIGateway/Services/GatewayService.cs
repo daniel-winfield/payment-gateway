@@ -27,7 +27,7 @@ namespace APIGateway.Services
             return isValidKey;
         }
 
-        public async Task<bool> ProcessPayment(PaymentDetailsDto paymentDetails)
+        public async Task<int> ProcessPayment(PaymentDetailsDto paymentDetails)
         {
             var isCardValid = await IsValidCard(paymentDetails.CardNumber);
 
@@ -45,7 +45,8 @@ namespace APIGateway.Services
                 var postBody = new StringContent(JsonConvert.SerializeObject(paymentDetails), System.Text.Encoding.UTF8, "application/json");
                 var postResponse = await client.PostAsync("https://localhost:44399/api/Payment/", postBody);
 
-                return postResponse.IsSuccessStatusCode;
+                var responseStr = await postResponse.Content.ReadAsStringAsync();
+                return int.Parse(responseStr);
             }
         }
 
