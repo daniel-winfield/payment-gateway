@@ -9,7 +9,14 @@ Invalid API key: `invalidkey`
 
 Invalid card number: `0000000000000000`
 
+## Key features
+* Microservice architecture
+* SSL between all gateway/microservices
+* Swagger integration for testing/development
+* Audit logging
+
 ## Process
+
 ### Create Payment
 1. Request is sent to the gateway
 2. API key is checked for validity
@@ -19,13 +26,19 @@ Invalid card number: `0000000000000000`
 6. The response from the bank is used to update the payment status
 7. The ID of the new payment is returned
 
+### Retrieve payment
+1. Request is sent to the gateway
+2. API key is checked for validity
+3. The payment details are retrieved from the database using the payment id
+4. The payment details are returned
+
 ### Get Payment
 1. Request is sent to the gateway
 2. API key is checked for validity
 3. Payment ID is passed to the payment microservice
 4. Payment details are returned
 
-## Premade valid api requests
-``
-
 ## Improvements
+* Add unit, integration and end-to-end tests
+* Add more validation to submitted details
+* Add more logging (error and additional auditing)

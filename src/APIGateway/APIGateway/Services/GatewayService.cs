@@ -14,6 +14,16 @@ namespace APIGateway.Services
 
             isValidKeyTask.Wait();
             var isValidKey = Boolean.Parse(isValidKeyTask.Result);
+
+            if (isValidKey)
+            {
+                LogEvent(new LogDto { LogType = LogTypeEnum.AuthSuccess, Message = String.Format("API key ({0}) authentication successful", apiKey) });
+            }
+            else
+            {
+                LogEvent(new LogDto { LogType = LogTypeEnum.AuthFailure, Message = String.Format("API key ({0}) authentication failed", apiKey) });
+            }
+
             return isValidKey;
         }
 
@@ -23,8 +33,11 @@ namespace APIGateway.Services
 
             if (!isCardValid)
             {
+                LogEvent(new LogDto { LogType = LogTypeEnum.ValidationFailure, Message = "Invalid card number" });
                 throw new ArgumentException("Card number is invalid");
             }
+
+            LogEvent(new LogDto { LogType = LogTypeEnum.ValidationSuccess, Message = "Valid card number" });
 
             using (var client = new HttpClient())
             {
@@ -62,6 +75,16 @@ namespace APIGateway.Services
 
                 var result = await stringTask;
                 return result;
+            }
+        }
+
+        private void LogEvent(LogDto log)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                var postBody = new StringContent(JsonConvert.SerializeObject(log), System.Text.Encoding.UTF8, "application/json");
+                client.PostAsync("https://localhost:44339/api/Log/", postBody);
             }
         }
     }

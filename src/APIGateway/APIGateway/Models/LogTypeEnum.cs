@@ -1,4 +1,4 @@
-﻿namespace Logging.API.Models
+﻿namespace APIGateway.Models
 {
     public enum LogTypeEnum
     {
